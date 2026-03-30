@@ -2,7 +2,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.0-EE4C2C?logo=pytorch&logoColor=white)
-![ESM](https://img.shields.io/badge/ESM--2-650M-brightgreen)
+![ESM](https://img.shields.io/badge/ESM--2-150M-brightgreen)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 Zero-shot prediction of PETase enzyme mutation fitness using protein language models. Developed for the ALIGN competition. No mutation-specific training data required.

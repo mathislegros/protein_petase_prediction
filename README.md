@@ -11,6 +11,23 @@ Zero-shot prediction of PETase enzyme mutation fitness using protein language mo
 
 ---
 
+## Pipeline
+
+```mermaid
+flowchart LR
+    A[Protein sequences]:::data --> B[ESM-2 embeddings]:::model
+    B --> C[Append fitness token]:::process
+    C --> D[Masked transformer\nlabel or protein masked]:::model
+    D --> E[Predict masked fitness\nat inference]:::process
+    E --> F[Ranked predictions\nNDCG scoring]:::data
+
+    classDef data    fill:#d4edda,stroke:#28a745,color:#000
+    classDef process fill:#f8f9fa,stroke:#6c757d,color:#000
+    classDef model   fill:#d1ecf1,stroke:#17a2b8,color:#000
+```
+
+---
+
 ## Approach
 
 ### Final Method — Masked Attention Fitness Predictor

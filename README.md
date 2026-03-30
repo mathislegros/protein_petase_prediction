@@ -43,8 +43,8 @@ At inference the fitness token is always masked; the model generalizes zero-shot
 
 | Method | Features |
 |---|---|
-| `predict_basic.py` | ESM-2 cosine similarity + L2 distance |
-| `predict_improved.py` | + per-residue log-likelihoods + physicochemical deltas |
+| `experiments/predict_basic.py` | ESM-2 cosine similarity + L2 distance |
+| `experiments/predict_improved.py` | + per-residue log-likelihoods + physicochemical deltas |
 | `src/predict.py` | + simplified 3Di structural tokens (Foldseek-inspired), confidence-weighted |
 
 ---
@@ -98,5 +98,6 @@ python data_analysis/biochemical_validation.py --input data/predictions_structur
 ## Notes
 
 - Data files are not tracked. Place the competition CSV in `data/`.
-- ESM-2 (650M) runs on CPU but is significantly faster with a GPU.
+- ESM-2 (150M, 640-dim) runs on CPU but is significantly faster with a GPU.
 - The masked attention predictor requires pre-training on labeled protein fitness data (e.g., ProteinGym) before zero-shot transfer to PETase.
+- ESM-2 weights are frozen during training — only the 11M parameter transformer is trained.

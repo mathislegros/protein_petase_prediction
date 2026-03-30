@@ -5,7 +5,7 @@
 ![ESM](https://img.shields.io/badge/ESM--2-650M-brightgreen)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-Zero-shot prediction of PETase enzyme mutation fitness using protein language models. Developed for the ALIGN competition (ETH Zürich, 2025). No mutation-specific training data required.
+Zero-shot prediction of PETase enzyme mutation fitness using protein language models. Developed for the ALIGN competition. No mutation-specific training data required.
 
 **Evaluation metric:** NDCG (Normalized Discounted Cumulative Gain) — ranking quality of beneficial mutations.
 

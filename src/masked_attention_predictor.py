@@ -24,17 +24,20 @@ from tqdm import tqdm
 import esm
 
 
+ESM2_MODEL_NAME = "esm2_t30_150M_UR50D"
+ESM2_REPR_LAYER = 30
+ESM2_DIM        = 640
+
+
 @dataclass
 class MaskedPredictorConfig:
-    esm_dim: int = 1280          # ESM-2 650M hidden dim
+    esm_dim: int = ESM2_DIM
     hidden_dim: int = 512
     n_heads: int = 8
     n_layers: int = 4
     dropout: float = 0.1
-    # Masking probabilities during training
-    p_mask_label: float = 0.5      # probability of masking the fitness token
-    p_mask_protein: float = 0.15   # fraction of protein positions masked when p_mask_label not triggered
-    # Training
+    p_mask_label: float = 0.5      # probability of masking the fitness token during training
+    p_mask_protein: float = 0.15   # fraction of protein positions masked otherwise
     learning_rate: float = 1e-4
     weight_decay: float = 0.01
 
@@ -196,7 +199,7 @@ class ZeroShotPipeline:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         print("Loading ESM-2 (650M)...")
-        self.esm_model, self.esm_alphabet = esm.pretrained.esm2_t33_650M_UR50D()
+        self.esm_model, self.esm_alphabet = esm.pretrained.load_model_and_alphabet(ESM2_MODEL_NAME)
         self.esm_batch_converter = self.esm_alphabet.get_batch_converter()
         self.esm_model.eval().to(self.device)
 
@@ -212,8 +215,8 @@ class ZeroShotPipeline:
         """ESM-2 mean-pooled embedding → (1, esm_dim)."""
         _, _, tokens = self.esm_batch_converter([("p", sequence)])
         tokens = tokens.to(self.device)
-        out = self.esm_model(tokens, repr_layers=[33], return_contacts=False)
-        return out["representations"][33][:, 1:-1, :].mean(dim=1)
+        out = self.esm_model(tokens, repr_layers=[ESM2_REPR_LAYER], return_contacts=False)
+        return out["representations"][ESM2_REPR_LAYER][:, 1:-1, :].mean(dim=1)
 
     @torch.no_grad()
     def predict(self, sequences: List[str], batch_size: int = 8) -> np.ndarray:

@@ -1,0 +1,13 @@
+data/
+checkpoints/
+outputs/
+__pycache__/
+*.py[cod]
+*.pth
+*.pt
+*.pkl
+*.csv
+*.log
+.env
+venv/
+.venv/
